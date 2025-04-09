@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Game</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="main.js"></script>
+</head>
+<body onload="rollDice()">
+    <div class="wrapper">
+        <nav class="nav-menu"></nav>
+
+        <section class="game-board">
+            <div class="cpu-half-board">
+                <div class="card-slot"></div>
+                <div class="card-slot"></div>
+                <div class="card-slot"></div>
+            </div>
+            <div class="player-half-board">
+                <div class="card-slot"></div>
+                <div class="card-slot"></div>
+                <div class="card-slot"></div>
+            </div>
+        </section>
+
+        <footer class="deck-menu">
+            <div class="dice">
+                <button>Roll</button>
+                <figure id="dice-figure"></figure>
+            </div>
+            <div class="deck">
+                <figure class="card"></figure>
+                <figure class="card"></figure>
+                <figure class="card"></figure>
+            </div>
+            <div class="extra-cards">
+                <figure class="extra-cards-figure"></figure>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

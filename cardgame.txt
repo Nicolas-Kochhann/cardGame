@@ -1,0 +1,32 @@
+
+-> Hearthstone
+
+Estrutura:
+
+-> Eventos sequenciais
+-> Combates regulares
+-> Combates de Chefe
+-> Lojinha
+
+Combate:
+
+-> Turno simultâneo
+-> Selecionar o alvo do ataque
+-> Ataque básico = ataque x defesa
+-> Clash de ataque = ataque x ataque
+-> Dado somando ataque e defesa de todas as cartas naquele turno
+
+Chefes:
+
+-> Característica randômica especial
+-> Dropa peça de totem
+
+
+Lojinha:
+
+-> 
+
+
+Totem:
+
+-> Quando completo, oferece buff permanente para a party
