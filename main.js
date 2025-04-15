@@ -1,5 +1,4 @@
-
-// function calls selectBoardCard() if card is unselected, or unselectBoardCard() if card is selected(A shit name, I know).
+// function add selectCard class if card is unselected, or remove if card is selected(A shit name, I know).
 function selectOrUnselectCard(cardID){
     
     // Stores cards with selectedCard CSS class.
@@ -7,9 +6,9 @@ function selectOrUnselectCard(cardID){
 
     let card = document.getElementById(cardID);
     if (card.classList.contains("selectedCard")){
-        unselectBoardCard(card);
+        card.classList.remove("selectedCard");
     } else {
-        selectBoardCard(card);
+        card.classList.add("selectedCard");
     }
 
     // Clear others selected cards.
@@ -17,14 +16,6 @@ function selectOrUnselectCard(cardID){
     for (i = 0; i < length; i++){
         currentSelectedCard[i].classList.remove("selectedCard");
     }
-}
-
-function selectBoardCard(card){
-    card.classList.add("selectedCard")
-}
-
-function unselectBoardCard(card){
-    card.classList.remove("selectedCard")
 }
 
 function rollDice(){
