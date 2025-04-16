@@ -15,4 +15,4 @@ class Card{
     }
 }
 
-let card1 = new Card(1, "card1", "/resources/card.png", 5, 5)
+let card1 = new Card(1, "card1", "/resources/cards/card.png", 5, 5)
