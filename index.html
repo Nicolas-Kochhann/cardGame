@@ -6,8 +6,9 @@
     <title>Card Game</title>
     <link rel="stylesheet" href="style.css">
     <script defer src="main.js"></script>
+    <script defer src="card.js" type="module"></script>
 </head>
-<body onload="rollDice()">
+<body>
     <div class="wrapper">
         <nav class="nav-menu"></nav>
 
@@ -29,12 +30,9 @@
                 <button>Roll</button>
                 <figure id="dice-figure"></figure>
             </div>
-            <div class="deck">
-                <figure class="card"><img id="playerCard1" src="resources/cards/card.png"></figure>
-                <figure class="card"><img id="playerCard2" src="resources/cards/card.png"></figure>
-                <figure class="card"><img id="playerCard3" src="resources/cards/card.png"></figure>
-            </div>
+            <div class="deck"></div>
             <div class="extra-cards">
+                <button onclick="getPileCard()">get card</button>
                 <figure class="extra-cards-figure"></figure>
             </div>
         </footer>
