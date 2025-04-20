@@ -1,9 +1,7 @@
-const cardsInDeck = [];
+/* ############################################################################# */
+/* ################################# Class Card ################################ */
+/* ############################################################################# */
 
-// ################################################################################
-// ################################################################################
-// Cards construction
-// Class card
 class Card{
     
     id;
@@ -25,11 +23,11 @@ class Card{
 }
 
 // Instances of card class
-const card1 = new Card(1, "card1", "/resources/cards/card.png", 20, 5, 5);
-const card2 = new Card(2, "card2", "/resources/cards/card.png", 20, 10, 1);
-const card3 = new Card(3, "card3", "/resources/cards/card.png", 20, 1, 10);
+const card1 = new Card(1, "card1", "/resources/cards/cardPHP.png", 20, 5, 5);
+const card2 = new Card(2, "card2", "/resources/cards/cardPHP.png", 20, 10, 1);
+const card3 = new Card(3, "card3", "/resources/cards/cardPHP.png", 20, 1, 10);
 
-// Array with all cards on the game
+// Array with "mother" cards on the game.
 const cards = [card1, card2, card3];
 const numberOfCardsInGame = cards.length;
 // ################################################################################
@@ -56,7 +54,14 @@ function selectOrUnselectBoardCard(cardID){
 }
 
 
+/* ############################################################################# */
+/* ################################ Get Pile Card ############################## */
+/* ############################################################################# */
+
+// Array with all cards in the deck.
+const cardsInDeck = [];
 function getPileCard(){
+
     // Choose a random card, a get the object in the cards array.
     const randomCard = Math.floor(Math.random() * numberOfCardsInGame) + 1;
     let chosenCheapCard = cards.find(card => card.id == randomCard);
@@ -64,34 +69,40 @@ function getPileCard(){
     // Create a copy of the mother card.
     chosenCheapCard = Object.assign({}, chosenCheapCard)
 
-
-/* ############################################################################# */
-/* ############################## I NEED TO FIX THIS ########################### */
-/* ############################################################################# */
+    // Don`t allows duplicated id.
     while (true){
-        chosenCheapCard.id = Math.floor(Math.random() * 3) + (numberOfCardsInGame + 1);
+        chosenCheapCard.id = Math.floor(Math.random() * 1000) + (numberOfCardsInGame + 1);
         console.log(chosenCheapCard);
         if (cardsInDeck.includes(chosenCheapCard.id)){
             continue;
         }
-        else {
-            cardsInDeck.push(chosenCheapCard);
-            break;
-        }
+        break;
     }
-/* ############################################################################# */
-/* ############################## I NEED TO FIX THIS ########################### */
-/* ############################################################################# */ 
     
+    // Control what card are in deck.
+    cardsInDeck.push(chosenCheapCard.id);
     console.log(cardsInDeck);
 
-
-
-    /*const deck = document.getElementsByClassName("deck")[0]; //[0] because getElementsByClassName return a collection.
+    // Create card element in HTML
+    const deck = document.getElementsByClassName("deck")[0]; //[0] because getElementsByClassName return a collection.
     const figure = deck.appendChild(document.createElement("figure"));
-    figure.id(chosenCheapCard)*/
+    figure.id = chosenCheapCard.id;
+    const img = figure.appendChild(document.createElement("img"));
+    img.src = chosenCheapCard.image;
+
+    // Create dataset property for atributtes
+    figure.dataset.name = chosenCheapCard.name;
+    figure.dataset.health = chosenCheapCard.health;
+    figure.dataset.attack = chosenCheapCard.attack;
+    figure.dataset.defense = chosenCheapCard.defense;
 
 }
+
+
+function putCardOnBoard(){
+    
+}
+
 
 function rollDice(){
     
