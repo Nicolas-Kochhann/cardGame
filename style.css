@@ -52,7 +52,7 @@ footer {
 /*########################################################
 ###################### Game Board ########################
 ##########################################################*/
-.cpu-half-board {
+#cpu-half-board {
     display: flex;
     flex-direction: row;
     height: 50%;
@@ -62,7 +62,7 @@ footer {
     align-items: center;
 }
 
-.player-half-board {
+#player-half-board {
     display: flex;
     flex-direction: row;
     height: 50%;
@@ -94,7 +94,7 @@ footer {
     border: 3px solid blue;
 }
 
-.deck {
+#deck {
     grid-area: deck;
     display: flex;
     flex-direction: row;

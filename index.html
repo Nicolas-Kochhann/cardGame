@@ -12,17 +12,13 @@
     <div class="wrapper">
         <nav class="nav-menu"></nav>
 
-        <section class="game-board">
-            <div class="cpu-half-board">
+        <section>
+            <div id="cpu-half-board">
                 <figure class="card-slot"></figure>
                 <figure class="card-slot"></figure>
                 <figure class="card-slot"></figure>
             </div>
-            <div class="player-half-board">
-                <figure class="card-slot"></figure>
-                <figure class="card-slot"></figure>
-                <figure class="card-slot"></figure>
-            </div>
+            <div id="player-half-board"></div>
         </section>
 
         <footer class="deck-menu">
@@ -30,7 +26,7 @@
                 <button>Roll</button>
                 <figure id="dice-figure"></figure>
             </div>
-            <div class="deck"></div>
+            <div id="deck"></div>
             <div class="extra-cards">
                 <button onclick="getPileCard()">get card</button>
                 <figure class="extra-cards-figure"></figure>

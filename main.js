@@ -12,7 +12,7 @@ class Card{
     defense;
 
     // Class card constructor
-    constructor(id, name, image, health, attack, defense){
+    constructor(id, name, image, health, attack, defense,){
         this.id = id;
         this.name = name;
         this.image = image;
@@ -20,6 +20,7 @@ class Card{
         this.attack = attack;
         this.defense = defense;
     }
+
 }
 
 // Instances of card class
@@ -59,7 +60,7 @@ function selectOrUnselectBoardCard(cardID){
 /* ############################################################################# */
 
 // Array with all cards in the deck.
-const cardsInDeck = [];
+const cardsInGame = [];
 function getPileCard(){
 
     // Choose a random card, a get the object in the cards array.
@@ -73,34 +74,45 @@ function getPileCard(){
     while (true){
         chosenCheapCard.id = Math.floor(Math.random() * 1000) + (numberOfCardsInGame + 1);
         console.log(chosenCheapCard);
-        if (cardsInDeck.includes(chosenCheapCard.id)){
+        if (cardsInGame.includes(chosenCheapCard.id)){
             continue;
         }
         break;
     }
     
     // Control what card are in deck.
-    cardsInDeck.push(chosenCheapCard.id);
-    console.log(cardsInDeck);
+    cardsInGame.push(chosenCheapCard.id);
+    console.log(cardsInGame);
 
     // Create card element in HTML
-    const deck = document.getElementsByClassName("deck")[0]; //[0] because getElementsByClassName return a collection.
-    const figure = deck.appendChild(document.createElement("figure"));
-    figure.id = chosenCheapCard.id;
-    const img = figure.appendChild(document.createElement("img"));
+    const deck = document.getElementById("deck"); //[0] because getElementsByClassName return a collection.
+    const card = deck.appendChild(document.createElement("figure"));
+    card.id = chosenCheapCard.id;
+
+    const img = card.appendChild(document.createElement("img"));
     img.src = chosenCheapCard.image;
 
     // Create dataset property for atributtes
-    figure.dataset.name = chosenCheapCard.name;
-    figure.dataset.health = chosenCheapCard.health;
-    figure.dataset.attack = chosenCheapCard.attack;
-    figure.dataset.defense = chosenCheapCard.defense;
+    card.dataset.name = chosenCheapCard.name;
+    card.dataset.health = chosenCheapCard.health;
+    card.dataset.attack = chosenCheapCard.attack;
+    card.dataset.defense = chosenCheapCard.defense;
+
+    card.setAttribute("onclick", "putCardOnBoard(" + chosenCheapCard.id + ")")
 
 }
 
 
-function putCardOnBoard(){
-    
+function putCardOnBoard(cardID){
+    const deck = document.getElementById("deck");
+    const card = document.getElementById(cardID);
+    //deck.removeChild(card);
+
+    const playerBoard = document.getElementById("player-half-board");
+    playerBoard.appendChild(card);
+
+    card.setAttribute("onclick", "selectOrUnselectBoardCard("+ cardID +")")
+;    
 }
 
 
