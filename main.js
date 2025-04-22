@@ -64,8 +64,8 @@ const cardsInGame = [];
 function getPileCard(){
 
     // Choose a random card, a get the object in the cards array.
-    const randomCard = Math.floor(Math.random() * numberOfCardsInGame) + 1;
-    let chosenCheapCard = cards.find(card => card.id == randomCard);
+    const randomCardId = Math.floor(Math.random() * numberOfCardsInGame) + 1;
+    let chosenCheapCard = cards.find(card => card.id == randomCardId);
 
     // Create a copy of the mother card.
     chosenCheapCard = Object.assign({}, chosenCheapCard)
@@ -114,6 +114,12 @@ function putCardOnBoard(cardID){
     card.setAttribute("onclick", "selectOrUnselectBoardCard("+ cardID +")")
 ;    
 }
+
+
+function renewHorde(){
+
+}
+
 
 
 function rollDice(){
