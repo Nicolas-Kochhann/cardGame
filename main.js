@@ -1,39 +1,4 @@
-/* ############################################################################# */
-/* ################################# Class Card ################################ */
-/* ############################################################################# */
-
-class Card{
-    
-    id;
-    name;
-    image;
-    health;
-    attack;
-    defense;
-
-    // Class card constructor
-    constructor(id, name, image, health, attack, defense,){
-        this.id = id;
-        this.name = name;
-        this.image = image;
-        this.health = health;
-        this.attack = attack;
-        this.defense = defense;
-    }
-
-}
-
-// Instances of card class
-const card1 = new Card(1, "card1", "/resources/cards/cardPHP.png", 20, 5, 5);
-const card2 = new Card(2, "card2", "/resources/cards/cardPHP.png", 20, 10, 1);
-const card3 = new Card(3, "card3", "/resources/cards/cardPHP.png", 20, 1, 10);
-
-// Array with "mother" cards on the game.
-const cards = [card1, card2, card3];
-const numberOfCardsInGame = cards.length;
-// ################################################################################
-// ################################################################################
-
+import { cards, numberOfCardsInGame } from "./instancedCards.js";
 
 function selectOrUnselectBoardCard(cardID){      // And remove if card is selected(A shit name, I know).
     
@@ -47,22 +12,21 @@ function selectOrUnselectBoardCard(cardID){      // And remove if card is select
     }
 
     let length = currentSelectedCard.length;
-    for (i = 0; i < length; i++){
+    console.log(length);
+    for (let i = 0; i < length; i++){
         currentSelectedCard[i].classList.remove("selectedCard");
     }
 
 }
 
 function targetCard(cardID){
-    
+
 }
 
 
-/* ############################################################################# */
-/* ################################ Get Pile Card ############################## */
-/* ############################################################################# */
-
 const cardsInGame = [];
+
+console.log(cards);
 function getPileCard(){
 
     const randomCardId = Math.floor(Math.random() * numberOfCardsInGame) + 1;
@@ -155,3 +119,9 @@ function rollDice(){
     console.log(diceValue);
 
 }
+
+// Attach functions to the global window object
+window.getPileCard = getPileCard;
+window.renewHorde = renewHorde;
+window.putCardOnBoard = putCardOnBoard;
+window.selectOrUnselectBoardCard = selectOrUnselectBoardCard;
