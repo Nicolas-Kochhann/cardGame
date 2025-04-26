@@ -8,16 +8,12 @@
     <script defer src="main.js"></script>
     <script defer src="card.js" type="module"></script>
 </head>
-<body>
+<body onload="renewHorde()">
     <div class="wrapper">
         <nav class="nav-menu"></nav>
 
         <section>
-            <div id="cpu-half-board">
-                <figure class="card-slot"></figure>
-                <figure class="card-slot"></figure>
-                <figure class="card-slot"></figure>
-            </div>
+            <div id="cpu-half-board"></div>
             <div id="player-half-board"></div>
         </section>
 
