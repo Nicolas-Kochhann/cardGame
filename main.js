@@ -19,10 +19,37 @@ function selectOrUnselectBoardCard(cardID){      // And remove if card is select
 
 }
 
-function targetCard(cardID){
+const actions = [];
+function targetingAction(cardID){
+
+    const realizerCardElement = document.querySelector(".selectedCard");
+    const targetCardElement = document.getElementById(cardID);
+
+    let realizerCard = {
+        id: realizerCardElement.id,
+        name: realizerCardElement.dataset.name,
+        health: realizerCardElement.dataset.health,
+        attack: realizerCardElement.dataset.attack,
+        defense: realizerCardElement.dataset.defense
+    }
+
+    let targetCard = {
+        id: targetCardElement.id,
+        name: targetCardElement.dataset.name,
+        health: targetCardElement.dataset.health,
+        attack: targetCardElement.dataset.attack,
+        defense: targetCardElement.dataset.defense
+    }
+
+
+    let realizerAndTarget = {
+        actionRealizer: realizerCard,
+        actionTarget: targetCard
+    }
+
+    return realizerAndTarget;
 
 }
-
 
 const cardsInGame = [];
 
@@ -125,3 +152,4 @@ window.getPileCard = getPileCard;
 window.renewHorde = renewHorde;
 window.putCardOnBoard = putCardOnBoard;
 window.selectOrUnselectBoardCard = selectOrUnselectBoardCard;
+window.targetingAction = targetingAction;
