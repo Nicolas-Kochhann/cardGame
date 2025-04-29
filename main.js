@@ -53,9 +53,7 @@ function targetingAction(cardID){
 
 const cardsInGame = [];
 
-console.log(cards);
-function getPileCard(){
-
+function generateCard(){
     const randomCardId = Math.floor(Math.random() * numberOfCardsInGame) + 1;
     let generatedCard = cards.find(card => card.id == randomCardId);
 
@@ -74,6 +72,16 @@ function getPileCard(){
     
     cardsInGame.push(generatedCard.id);
     console.log(cardsInGame);
+    return generatedCard;
+}
+
+
+console.log(cards);
+
+
+function getPileCard(){
+
+    let generatedCard = generateCard();
 
     const deck = document.getElementById("deck");
     const card = deck.appendChild(document.createElement("figure"));
@@ -91,26 +99,10 @@ function getPileCard(){
     card.setAttribute("onclick", "putCardOnBoard(" + generatedCard.id + ")")
 }
 
+
 function renewHorde(){
 
-    const randomCardId = Math.floor(Math.random() * numberOfCardsInGame) + 1;
-    let generatedCard = cards.find(card => card.id == randomCardId);
-
-
-    generatedCard = Object.assign({}, generatedCard);
-
-
-    while (true){
-        generatedCard.id = Math.floor(Math.random() * 1000) + (numberOfCardsInGame + 1);
-        console.log(generatedCard);
-        if (cardsInGame.includes(generatedCard.id)){
-            continue;
-        }
-        break;
-    }
-    
-    cardsInGame.push(generatedCard.id);
-    console.log(cardsInGame);
+    let generatedCard = generateCard();
 
     const cpuBoard = document.getElementById("cpu-half-board");
     const card = cpuBoard.appendChild(document.createElement("figure"));
