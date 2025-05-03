@@ -1,9 +1,13 @@
 import { cards, numberOfCardsInGame } from "./instancedCards.js";
 
+const cardsInGameId = [];
+const cardsInGameInstances = [];
+
 function selectOrUnselectBoardCard(cardID){      // And remove if card is selected(A shit name, I know).
     
-    const currentSelectedCard = document.querySelectorAll(".selectedCard");   // Stores cards with selectedCard CSS class.
+    const currentSelectedCardArray = document.querySelectorAll(".selectedCard");   // Stores cards with selectedCard CSS class.
 
+    // Remove duplicated selected cards
     let card = document.getElementById(cardID);
     if (card.classList.contains("selectedCard")){
         card.classList.remove("selectedCard");
@@ -11,47 +15,35 @@ function selectOrUnselectBoardCard(cardID){      // And remove if card is select
         card.classList.add("selectedCard");
     }
 
-    let length = currentSelectedCard.length;
-    console.log(length);
+    let length = currentSelectedCardArray.length;
+
     for (let i = 0; i < length; i++){
-        currentSelectedCard[i].classList.remove("selectedCard");
+        currentSelectedCardArray[i].classList.remove("selectedCard");
     }
 
+    let currentSelectedCard = document.querySelector(".selectedCard"); // Get the unique element remaining with selected card class
+    
+    if (currentSelectedCard != null){
+        let selectedCard = cardsInGameInstances.find(card => card.id == currentSelectedCard.id);
+    } 
+    else {
+        let selectedCard = null;     // If I unselect a card, selectedCard = null;
+    } 
+
+    console.log(cardsInGameInstances);
+    console.log(selectedCard);
+
+    return selectedCard;
+
 }
+
+
 
 const actions = [];
-function targetingAction(cardID){
 
-    const realizerCardElement = document.querySelector(".selectedCard");
-    const targetCardElement = document.getElementById(cardID);
-
-    let realizerCard = {
-        id: realizerCardElement.id,
-        name: realizerCardElement.dataset.name,
-        health: realizerCardElement.dataset.health,
-        attack: realizerCardElement.dataset.attack,
-        defense: realizerCardElement.dataset.defense
-    }
-
-    let targetCard = {
-        id: targetCardElement.id,
-        name: targetCardElement.dataset.name,
-        health: targetCardElement.dataset.health,
-        attack: targetCardElement.dataset.attack,
-        defense: targetCardElement.dataset.defense
-    }
-
-
-    let realizerAndTarget = {
-        actionRealizer: realizerCard,
-        actionTarget: targetCard
-    }
-
-    return realizerAndTarget;
+function attackCard(realizerCard, targetCard){
 
 }
-
-const cardsInGame = [];
 
 function generateCard(){
     const randomCardId = Math.floor(Math.random() * numberOfCardsInGame) + 1;
@@ -63,20 +55,19 @@ function generateCard(){
 
     while (true){
         generatedCard.id = Math.floor(Math.random() * 1000) + (numberOfCardsInGame + 1); // Generate id.
-        console.log(generatedCard);
-        if (cardsInGame.includes(generatedCard.id)){                                     // Don´t allow duplicate id
+        if (cardsInGameId.includes(generatedCard.id)){                                     // Don´t allow duplicate id
             continue;
         }
         break;
     }
     
-    cardsInGame.push(generatedCard.id);
-    console.log(cardsInGame);
+    cardsInGameId.push(generatedCard.id);
+    cardsInGameInstances.push(generatedCard);
+
     return generatedCard;
 }
 
 
-console.log(cards);
 
 
 function getPileCard(){
@@ -90,14 +81,11 @@ function getPileCard(){
     const img = card.appendChild(document.createElement("img"));
     img.src = generatedCard.image;
 
-    
-    card.dataset.name = generatedCard.name;            
-    card.dataset.health = generatedCard.health;       // Create dataset property for atributtes
-    card.dataset.attack = generatedCard.attack;
-    card.dataset.defense = generatedCard.defense;
-
     card.setAttribute("onclick", "putCardOnBoard(" + generatedCard.id + ")")
+
 }
+
+
 
 
 function renewHorde(){
@@ -110,13 +98,10 @@ function renewHorde(){
 
     const img = card.appendChild(document.createElement("img"));
     img.src = generatedCard.image
-
-    card.dataset.name = generatedCard.name;            
-    card.dataset.health = generatedCard.health;       // Create dataset property for atributtes
-    card.dataset.attack = generatedCard.attack;
-    card.dataset.defense = generatedCard.defense;
   
 }
+
+
 
 
 function putCardOnBoard(cardID){
@@ -132,12 +117,16 @@ function putCardOnBoard(cardID){
 
 
 
+
 function rollDice(){
     
     const diceValue = Math.floor(Math.random() * 6) + 1;
-    console.log(diceValue);
+    //console.log(diceValue);
 
 }
+
+
+
 
 // Attach functions to the global window object
 window.getPileCard = getPileCard;
