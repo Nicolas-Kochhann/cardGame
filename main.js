@@ -55,10 +55,9 @@ function generateCard(){
 
     while (true){
         generatedCard.id = Math.floor(Math.random() * 1000) + (numberOfCardsInGame + 1); // Generate id.
-        if (cardsInGameId.includes(generatedCard.id)){                                     // Don´t allow duplicate id
-            continue;
+        if !(cardsInGameId.includes(generatedCard.id)){                                     // Don´t allow duplicate id
+            break;
         }
-        break;
     }
     
     cardsInGameId.push(generatedCard.id);
@@ -66,6 +65,7 @@ function generateCard(){
 
     return generatedCard;
 }
+
 
 
 
