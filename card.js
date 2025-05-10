@@ -6,7 +6,7 @@ export class Card{
     health;
     attack;
     defense;
-    makedAction = 0; 
+    makedAction = 0;
 
     constructor(id, name, image, health, attack, defense,){
         this.id = id;

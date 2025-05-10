@@ -21,19 +21,19 @@ function selectOrUnselectBoardCard(cardID){      // And remove if card is select
         currentSelectedCardArray[i].classList.remove("selectedCard");
     }
 
+}
+
+
+function getSelectedCard(){
     let currentSelectedCard = document.querySelector(".selectedCard"); // Get the unique element remaining with selected card class
     
+    let selectedCard = null;
+
     if (currentSelectedCard != null){
-        let selectedCard = cardsInGameInstances.find(card => card.id == currentSelectedCard.id);
-    } 
-    else {
-        let selectedCard = null;     // If I unselect a card, selectedCard = null;
+        selectedCard = cardsInGameInstances.find(card => card.id == currentSelectedCard.id);
     } 
 
-    console.log(cardsInGameInstances);
-    console.log(selectedCard);
-
-    return selectedCard;
+    return selectedCard;         // If dont have card selected, returns null.
 
 }
 
@@ -41,16 +41,26 @@ function selectOrUnselectBoardCard(cardID){      // And remove if card is select
 
 const actions = [];
 
-function attackCard(realizerCard, targetCard){
+function attackCard(realizerCard, targetCard, diceResultAttack, diceResultDefense){
+
+    if (realizerCard == null){
+        return;
+    }
+
+    realizerCard.attack + diceResultAttack  >= targetCard.defense + diceResultDefense ? targetCard.takeDamage(realizerCard.attack) : null;
 
 }
+
+
+
+
 
 function generateCard(){
     const randomCardId = Math.floor(Math.random() * numberOfCardsInGame) + 1;
     let generatedCard = cards.find(card => card.id == randomCardId);
 
 
-    generatedCard = Object.assign({}, generatedCard);              // Create a copy of the mother card.
+    generatedCard = Object.assign({}, generatedCard);        // Create a copy of the mother card.
 
 
     while (true){
@@ -119,9 +129,9 @@ function putCardOnBoard(cardID){
 
 
 function rollDice(){
-    
+
     const diceValue = Math.floor(Math.random() * 6) + 1;
-    //console.log(diceValue);
+    return diceValue;
 
 }
 
@@ -133,4 +143,9 @@ window.getPileCard = getPileCard;
 window.renewHorde = renewHorde;
 window.putCardOnBoard = putCardOnBoard;
 window.selectOrUnselectBoardCard = selectOrUnselectBoardCard;
+<<<<<<< Updated upstream
 window.targetingAction = targetingAction;
+=======
+window.getSelectedCard = getSelectedCard;
+//window.targetingAction = targetingAction;
+>>>>>>> Stashed changes
