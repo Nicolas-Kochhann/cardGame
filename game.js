@@ -1,5 +1,6 @@
 import { cards, numberOfCardsInGame } from "./instancedCards.js";
 
+const actions = []
 const cardsInGameId = [];
 const cardsInGameInstances = [];
 
@@ -40,20 +41,6 @@ function getSelectedCard(){
 
 
 
-
-function attackCard(realizerCard, targetCard, diceResultAttack, diceResultDefense){
-
-    if (realizerCard == null){
-        return;
-    }
-
-    realizerCard.attack + diceResultAttack  >= targetCard.defense + diceResultDefense ? targetCard.takeDamage(realizerCard.attack) : null;
-
-}
-
-
-
-
 function generateCard(){
     const randomCardId = Math.floor(Math.random() * numberOfCardsInGame) + 1;
     let generatedCard = cards.find(card => card.id == randomCardId);
@@ -64,7 +51,7 @@ function generateCard(){
 
     while (true){
         generatedCard.id = Math.floor(Math.random() * 1000) + (numberOfCardsInGame + 1); // Generate id.
-        if (!(cardsInGameId.includes(generatedCard.id))){                                     // Don´t allow duplicate id
+        if (!(cardsInGameId.includes(generatedCard.id))){                               // Don´t allow duplicate id
             break;
         }
     }
@@ -91,7 +78,7 @@ function getPileCard(){
     const img = card.appendChild(document.createElement("img"));
     img.src = generatedCard.image;
 
-    card.setAttribute("onclick", "putCardOnBoard(" + generatedCard.id + ")")
+    card.setAttribute("onclick", "putCardOnBoard(" + generatedCard.id + ")");
 
 }
 
@@ -107,10 +94,9 @@ function renewHorde(){
     card.id = generatedCard.id;
 
     const img = card.appendChild(document.createElement("img"));
-    img.src = generatedCard.image
+    img.src = generatedCard.image;
   
 }
-
 
 
 
@@ -127,6 +113,17 @@ function putCardOnBoard(cardID){
 
 
 
+function attackCard(realizerCard, targetCard, diceResultAttack, diceResultDefense){
+
+    if (realizerCard == null){
+        return;
+    }
+
+    realizerCard.attack + diceResultAttack  >= targetCard.defense + diceResultDefense ? targetCard.takeDamage(realizerCard.attack) : null;
+
+}
+
+
 
 function rollDice(){
 
@@ -137,6 +134,23 @@ function rollDice(){
 
 
 
+function executeActions(){
+
+    let diceResultAttack = rollDice();
+    let diceResultDefense = rollDice();
+
+    const dice = {
+        diceResultAttack: diceResultAttack,
+        diceResultDefense: diceResultDefense
+    };
+
+
+    actions.forEach(action => () => {if (action.type === "attack"){
+        action.realizeAction(dice);
+    }});
+
+}
+
 
 // Attach functions to the global window object
 window.getPileCard = getPileCard;
@@ -145,5 +159,7 @@ window.putCardOnBoard = putCardOnBoard;
 window.selectOrUnselectBoardCard = selectOrUnselectBoardCard;
 window.getSelectedCard = getSelectedCard;
 window.attackCard = attackCard;
+window.executeActions = executeActions;
 
-export {cardsInGameId, cardsInGameInstances, getPileCard, renewHorde, putCardOnBoard, selectOrUnselectBoardCard, getSelectedCard, attackCard};
+export default { actions, cardsInGameId, cardsInGameInstances, getPileCard, renewHorde, putCardOnBoard, selectOrUnselectBoardCard, getSelectedCard, attackCard, executeActions };
+

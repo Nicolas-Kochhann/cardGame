@@ -153,10 +153,12 @@ footer {
 ##########################################################*/
 
 .selectedCard > img{
-    box-shadow: 0px 0px 5px 5px green;
+    box-shadow: 0px 0px 5px 5px rgb(133, 138, 209);
     animation: selectedCard-animation ease 200ms;
     height: 185px;
     width: 160px;
+    will-change: auto;
+    
 }
 
 @keyframes selectedCard-animation {

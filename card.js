@@ -7,8 +7,9 @@ export class Card{
     attack;
     defense;
     madeAction = 0;
+    actionLimit= 1;
 
-    constructor(id, name, image, health, attack, defense,){
+    constructor(id, name, image, health, attack, defense){
         this.id = id;
         this.name = name;
         this.image = image;
