@@ -1,3 +1,4 @@
+import { createElement } from "react";
 import { cards, numberOfCardsInGame } from "./instancedCards.js";
 
 const actions = []
@@ -72,8 +73,24 @@ function getPileCard(){
     let generatedCard = generateCard();
 
     const deck = document.getElementById("deck");
-    const card = deck.appendChild(document.createElement("figure"));
+    const card = deck.appendChild(document.createElement("div"));
     card.id = generatedCard.id;
+
+    const cardNameDisplay = document.createElement("div");
+    const cardImageDisplay = document.createElement("figure");
+    const cardStatsDisplay = document.createElement("div");
+
+    card.appendChild(cardNameDisplay);
+    card.appendChild(cardImageDisplay);
+    card.appendChild(cardStatsDisplay);
+
+    const cardAttack = document.createElement("div");
+    const cardDefense = document.createElement("div");
+    const cardHealth = document.createElement("div");
+
+    cardStatsDisplay.appendChild(cardAttack);
+    cardStatsDisplay.appendChild(cardDefense);
+    cardStatsDisplay.appendChild(cardHealth);
 
     const img = card.appendChild(document.createElement("img"));
     img.src = generatedCard.image;
