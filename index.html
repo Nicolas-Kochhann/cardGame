@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,14 +11,19 @@
     <script type="module" defer src="instancedCards.js"></script>
     <script type="module" defer src="card.js"></script>
 </head>
+
 <body>
     <div class="wrapper">
         <nav class="nav-menu"></nav>
 
-        <section>
-            <div id="cpu-half-board"><figure id="474" data-name="card1" data-health="20" data-attack="5" data-defense="5" onclick="selectOrUnselectBoardCard(474)"><img src="/resources/cards/cardPHP.png"></figure></div>
-            <div id="player-half-board"><figure id="71" data-name="card1" data-health="20" data-attack="5" data-defense="5" onclick="selectOrUnselectBoardCard(71)" class="selectedCard"><img src="/resources/cards/cardPHP.png"></figure></div>
-        </section>
+        <board>
+            <div id="cpu-half-board"></div>
+            <div id="player-half-board">
+                <figure id="772" class="card selectedCard" onclick="selectOrUnselectBoardCard(772)">
+                    <img src="/resources/cards/magia_negra.png">
+                </figure>
+            </div>
+        </board>
 
         <footer class="deck-menu">
             <div class="dice">
@@ -32,4 +38,5 @@
         </footer>
     </div>
 </body>
+
 </html>
