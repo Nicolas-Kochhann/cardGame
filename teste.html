@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    </head>
+
+    <style>
+        .carta {
+            position: relative;
+            width: 150px;
+            height: 200px;
+            background: #ddd;
+            border-radius: 8px;
+            overflow: visible;
+            /* IMPORTANTE para deixar elementos "vazarem" */
+            margin: 50px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            width: 150px;
+            height: 220px;
+            border: 6px solid rgb(221, 211, 154);
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+            background: #fff;
+        }
+
+        .conteudo {
+            padding: 10px;
+        }
+
+        .nome {
+            position: absolute;
+            top: -20px;
+            /* "vaza" para fora da div */
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgb(221, 211, 154);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .atributos {
+            position: absolute;
+            bottom: -20px;
+            /* também "vaza" */
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border: 1px solid #aaa;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 4px;
+            color: #06173b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="carta">
+        <div class="conteudo">
+            <img src="carta-imagem.jpg" alt="Carta">
+            <div class="atributos">
+                <span><i class="fas fa-crosshairs"></i> 5</span>
+                <span><i class="fas fa-shield-alt"></i> 3</span>
+            </div>
+        </div>
+        <div class="nome">Dragão Flamejante</div>
+    </div>
+</body>
+
+</html>

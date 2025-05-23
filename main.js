@@ -40,5 +40,3 @@ function cardStatsDisplay() {
 }
 
 window.cardStatsDisplay = cardStatsDisplay;
-
-

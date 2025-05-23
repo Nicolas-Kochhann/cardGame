@@ -1,4 +1,4 @@
-import { createElement } from "react";
+
 import { cards, numberOfCardsInGame } from "./instancedCards.js";
 
 const actions = []
@@ -76,26 +76,26 @@ function getPileCard(){
     const card = deck.appendChild(document.createElement("div"));
     card.id = generatedCard.id;
 
-    const cardNameDisplay = document.createElement("div");
-    const cardImageDisplay = document.createElement("figure");
-    const cardStatsDisplay = document.createElement("div");
-
-    card.appendChild(cardNameDisplay);
-    card.appendChild(cardImageDisplay);
-    card.appendChild(cardStatsDisplay);
-
-    const cardAttack = document.createElement("div");
-    const cardDefense = document.createElement("div");
-    const cardHealth = document.createElement("div");
-
-    cardStatsDisplay.appendChild(cardAttack);
-    cardStatsDisplay.appendChild(cardDefense);
-    cardStatsDisplay.appendChild(cardHealth);
-
+    const cardName = card.appendChild(document.createElement("div"));
+    const cardStats = card.appendChild(document.createElement("div"));
     const img = card.appendChild(document.createElement("img"));
-    img.src = generatedCard.image;
 
     card.setAttribute("onclick", "putCardOnBoard(" + generatedCard.id + ")");
+
+    img.src = generatedCard.image;
+
+    cardName.textContent = generatedCard.name;
+
+    cardName.classList.add("card-name");
+    cardStats.classList.add("stats");
+    
+    card.classList.add("card");
+    cardStats.classList.add("stats");
+
+    cardStats.innerHTML = 
+    `<span><i></i>${generatedCard.attack}</span>
+    <span><i></i>${generatedCard.defense}</span>
+    <span><i></i>${generatedCard.health}</span>`;
 
 }
 
