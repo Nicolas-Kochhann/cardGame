@@ -18,8 +18,8 @@ export class Card{
         this.defense = defense;
     }
 
-    takeDamage(){
-        this.health = this.health - attackDamage;
+    takeDamage(damage){
+        this.health -= damage;
     }
 
 }

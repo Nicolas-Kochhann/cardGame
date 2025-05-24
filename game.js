@@ -1,5 +1,6 @@
 
 import { cards, numberOfCardsInGame } from "./instancedCards.js";
+import { Card } from "./card.js";
 
 const actions = []
 const cardsInGameId = [];
@@ -44,10 +45,10 @@ function getSelectedCard(){
 
 function generateCard(){
     const randomCardId = Math.floor(Math.random() * numberOfCardsInGame) + 1;
-    let generatedCard = cards.find(card => card.id == randomCardId);
+    let baseCard = cards.find(card => card.id == randomCardId);
 
 
-    generatedCard = Object.assign({}, generatedCard);        // Create a copy of the mother card.
+    generatedCard = new Card();        // Create a copy of the mother card.
 
 
     while (true){
@@ -65,40 +66,78 @@ function generateCard(){
 }
 
 
+// Add the card element inside of a parentNode.
+function generateCardHtml(parentElementNode, card){
+
+    const cardNode = parentElementNode.appendChild(document.createElement("div"));
+    cardNode.id = card.id;
+
+    const cardName = cardNode.appendChild(document.createElement("div"));
+    const cardStats = cardNode.appendChild(document.createElement("div"));
+    const img = cardNode.appendChild(document.createElement("img"));
+
+    img.src = card.image;
+
+    cardName.textContent = card.name;
+
+    cardName.classList.add("card-name");
+    cardStats.classList.add("stats");
+    
+    cardNode.classList.add("card");
+    cardStats.classList.add("stats");
+
+    cardStats.innerHTML = 
+    `<span><i>ATK </i>${card.attack}</span>
+    <span><i>DEF </i>${card.defense}</span>
+    <span><i>HP </i>${card.health}</span>`;
+
+    return cardNode;
+}
 
 
 
 function getPileCard(){
 
     let generatedCard = generateCard();
-
     const deck = document.getElementById("deck");
-    const card = deck.appendChild(document.createElement("div"));
-    card.id = generatedCard.id;
-
-    const cardName = card.appendChild(document.createElement("div"));
-    const cardStats = card.appendChild(document.createElement("div"));
-    const img = card.appendChild(document.createElement("img"));
-
-    card.setAttribute("onclick", "putCardOnBoard(" + generatedCard.id + ")");
-
-    img.src = generatedCard.image;
-
-    cardName.textContent = generatedCard.name;
-
-    cardName.classList.add("card-name");
-    cardStats.classList.add("stats");
     
-    card.classList.add("card");
-    cardStats.classList.add("stats");
+    const cardNode = generateCardHtml(deck, generatedCard);
 
-    cardStats.innerHTML = 
-    `<span><i></i>${generatedCard.attack}</span>
-    <span><i></i>${generatedCard.defense}</span>
-    <span><i></i>${generatedCard.health}</span>`;
+    cardNode.setAttribute("onclick", "putCardOnBoard(" + generatedCard.id + ")");
+
+    cardNode.addEventListener("click", () => putCardOnBoard(cardNode));
 
 }
 
+
+
+// Add the attack event to an element Node.
+function addAttackCardEvent(cardNode){
+
+    cardNode.addEventListener("click", () => {
+
+        const realizerCard = getSelectedCard();
+
+        if (realizerCard == null) return;  // if don´t have selected card, returns function without register the action.
+
+        const targetCard = cardsInGameInstances.find(card => card.id == cardNode.id);
+
+        // Test if the realizer card have actions remaining to do.
+        if (realizerCard.makedAction === realizerCard.actionLimit) {
+            alert("The selected card don`t have more actions in this turn.");
+            return;
+        }
+
+        actions.push({
+            type: "attack",
+            realizeAction: (dice) => attackCard(realizerCard, targetCard, dice.diceResultAttack, dice.diceResultDefense)  // Closure which will receive a dice value in the future
+        });
+
+        realizerCard.madeActions += 1;
+
+        console.log(actions)
+    });
+}
 
 
 
@@ -107,24 +146,20 @@ function renewHorde(){
     let generatedCard = generateCard();
 
     const cpuBoard = document.getElementById("cpu-half-board");
-    const card = cpuBoard.appendChild(document.createElement("figure"));
-    card.id = generatedCard.id;
+    
+    const cardNode = generateCardHtml(cpuBoard, generatedCard);
 
-    const img = card.appendChild(document.createElement("img"));
-    img.src = generatedCard.image;
-  
+    addAttackCardEvent(cardNode)
 }
 
 
 
-function putCardOnBoard(cardID){
-
-    const card = document.getElementById(cardID);
+function putCardOnBoard(cardNode){
 
     const playerBoard = document.getElementById("player-half-board");
-    playerBoard.appendChild(card);
+    playerBoard.appendChild(cardNode);
 
-    card.setAttribute("onclick", "selectOrUnselectBoardCard("+ cardID +")");
+    cardNode.setAttribute("onclick", "selectOrUnselectBoardCard("+ cardNode.id +")");
 
 }
 
@@ -162,10 +197,11 @@ function executeActions(){
     };
 
 
-    actions.forEach(action => () => {if (action.type === "attack"){
+    actions.forEach(action => {if (action.type === "attack"){
         action.realizeAction(dice);
     }});
 
+    actions.length = 0;
 }
 
 

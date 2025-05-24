@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');
+
+
 /*########################################################
 ################### RESET CSS ############################
 ##########################################################*/
@@ -5,9 +8,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     width: 100%;
 }
@@ -142,32 +149,63 @@ footer {
 /*########################################################
 ###################### Card Style ########################
 ##########################################################*/
+.card,
+.card-name,
+.stats {
+    display: flex;
+    align-items: center;
+}
 
-.card{
+.card-name,
+.stats {
+    border: 2px solid rgb(155, 58, 247);
+    background-image: linear-gradient(45deg, rgb(192, 130, 250), rgb(155, 58, 247));
+
+    font-size: 20px;
+}
+
+.card {
     height: 180px;
     width: 140px;
     display: flex;
     flex-direction: column;
 
     position: relative;
+    border: 4px solid rgb(124, 70, 248);
+    border-radius: 6px;
 }
 
-.card-name{
-    height: 20px;
-    width: 80%;
+.card-name {
+    justify-content: center;
     position: absolute;
-    align-self: center;
-    text-align: center;
-    background-image: linear-gradient(45deg, rgb(160, 59, 255), rgb(124, 70, 248));
-    top: -10px;
-    
+
+    height: 22px;
+    width: 80%;
+
+    top: -20px;
+    right: -4px;
+
 }
 
-.stats{
-    display: flex;
+.stats {
     flex-direction: row;
     justify-content: space-around;
     position: absolute;
+
+    height: 23px;
+    width: 90%;
+
+    bottom: 5px;
+}
+
+.stats i {
+    font-size: 12px;
+}
+
+.card>img {
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
 }
 
 
@@ -182,10 +220,11 @@ footer {
 ##########################################################*/
 
 @keyframes selectedCard-animation {
-    from{
+    from {
         transform: scale(0);
-    } to {
+    }
+
+    to {
         transform: scale(1);
     }
 }
-
