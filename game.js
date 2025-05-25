@@ -5,6 +5,7 @@ import { Card } from "./card.js";
 const actions = []
 const cardsInGameId = [];
 const cardsInGameInstances = [];
+const cemetery = [];
 
 function selectOrUnselectBoardCard(cardID){      // And remove if card is selected(A shit name, I know).
     
@@ -47,16 +48,23 @@ function generateCard(){
     const randomCardId = Math.floor(Math.random() * numberOfCardsInGame) + 1;
     let baseCard = cards.find(card => card.id == randomCardId);
 
-
-    generatedCard = new Card();        // Create a copy of the mother card.
-
-
+    let newCardId;
     while (true){
-        generatedCard.id = Math.floor(Math.random() * 1000) + (numberOfCardsInGame + 1); // Generate id.
-        if (!(cardsInGameId.includes(generatedCard.id))){                               // Don´t allow duplicate id
+        newCardId = Math.floor(Math.random() * 1000) + (numberOfCardsInGame + 1); // Generate id.
+        if (!(cardsInGameId.includes(newCardId))){                               // Don´t allow duplicate id
             break;
         }
     }
+
+    // Create a copy of the mother card with new id.
+    let generatedCard = new Card(
+        newCardId,
+        baseCard.name,
+        baseCard.image,
+        baseCard.health,
+        baseCard.attack,
+        baseCard.defense
+    );        
     
     cardsInGameId.push(generatedCard.id);
     console.log(cardsInGameId);
@@ -66,7 +74,8 @@ function generateCard(){
 }
 
 
-// Add the card element inside of a parentNode.
+
+// Add the card element inside of a parent Node.
 function generateCardHtml(parentElementNode, card){
 
     const cardNode = parentElementNode.appendChild(document.createElement("div"));
@@ -86,13 +95,27 @@ function generateCardHtml(parentElementNode, card){
     cardNode.classList.add("card");
     cardStats.classList.add("stats");
 
-    cardStats.innerHTML = 
-    `<span><i>ATK </i>${card.attack}</span>
-    <span><i>DEF </i>${card.defense}</span>
-    <span><i>HP </i>${card.health}</span>`;
+    addCardNodeStats(card);
 
     return cardNode;
 }
+
+
+
+// add or update the card stats to html card element
+function addCardNodeStats(card){
+
+    const cardElement = document.getElementById(card.id)
+
+    const childrenElements = cardElement.children;
+
+    // Get the stats div, and add the html, updating it .
+    childrenElements[1].innerHTML =
+    `<span><i>ATK </i>${card.attack}</span>
+    <span><i>DEF </i>${card.defense}</span>
+    <span><i>HP </i>${card.health}</span>`
+}
+
 
 
 
@@ -118,12 +141,12 @@ function addAttackCardEvent(cardNode){
 
         const realizerCard = getSelectedCard();
 
-        if (realizerCard == null) return;  // if don´t have selected card, returns function without register the action.
+        if (realizerCard === null) return;  // if don´t have selected card, returns function without register the action.
 
         const targetCard = cardsInGameInstances.find(card => card.id == cardNode.id);
 
         // Test if the realizer card have actions remaining to do.
-        if (realizerCard.makedAction === realizerCard.actionLimit) {
+        if (realizerCard.madeActions === realizerCard.actionLimit) {
             alert("The selected card don`t have more actions in this turn.");
             return;
         }
@@ -135,7 +158,7 @@ function addAttackCardEvent(cardNode){
 
         realizerCard.madeActions += 1;
 
-        console.log(actions)
+        console.log(actions);
     });
 }
 
@@ -149,17 +172,17 @@ function renewHorde(){
     
     const cardNode = generateCardHtml(cpuBoard, generatedCard);
 
-    addAttackCardEvent(cardNode)
+    addAttackCardEvent(cardNode);
 }
 
 
 
-function putCardOnBoard(cardNode){
+function putCardOnBoard(cardElement){
 
     const playerBoard = document.getElementById("player-half-board");
-    playerBoard.appendChild(cardNode);
+    playerBoard.appendChild(cardElement);
 
-    cardNode.setAttribute("onclick", "selectOrUnselectBoardCard("+ cardNode.id +")");
+    cardElement.setAttribute("onclick", "selectOrUnselectBoardCard("+ cardElement.id +")");
 
 }
 
@@ -172,6 +195,28 @@ function attackCard(realizerCard, targetCard, diceResultAttack, diceResultDefens
     }
 
     realizerCard.attack + diceResultAttack  >= targetCard.defense + diceResultDefense ? targetCard.takeDamage(realizerCard.attack) : null;
+
+    addCardNodeStats(targetCard);
+
+    if (targetCard.isDead == true) removeCard(targetCard);
+
+    console.log(targetCard.isDead);
+    console.log(targetCard.health);
+
+}
+
+
+
+// Removes card object and card element from game, taking card object to the cemetery.
+function removeCard(card){
+    
+    cardsInGameId.pop(card.id);
+    cardsInGameInstances.pop(card);
+
+    const cardElement = document.getElementById(card.id);
+    cardElement.remove();
+
+    cemetery.unshift(card) // Add card on start of cemetery array.
 
 }
 

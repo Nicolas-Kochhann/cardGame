@@ -6,8 +6,9 @@ export class Card{
     health;
     attack;
     defense;
+    isDead = false;
     madeAction = 0;
-    actionLimit= 1;
+    actionLimit = 1;
 
     constructor(id, name, image, health, attack, defense){
         this.id = id;
@@ -20,6 +21,7 @@ export class Card{
 
     takeDamage(damage){
         this.health -= damage;
+        this.isDead = this.health <= 0; // Check if is dead.
     }
 
 }
