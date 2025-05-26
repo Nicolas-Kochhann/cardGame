@@ -158,13 +158,14 @@ function addAttackCardEvent(cardNode){
 
         realizerCard.madeActions += 1;
 
+        console.log(realizerCard.madeActions);
         console.log(actions);
     });
 }
 
 
 
-function renewHorde(){
+function generateEnemyCard(){
 
     let generatedCard = generateCard();
 
@@ -247,12 +248,14 @@ function executeActions(){
     }});
 
     actions.length = 0;
+
+    cardsInGameInstances.forEach(card => card.madeActions = 0);
 }
 
 
 // Attach functions to the global window object
 window.getPileCard = getPileCard;
-window.renewHorde = renewHorde;
+window.generateEnemyCard = generateEnemyCard;
 window.putCardOnBoard = putCardOnBoard;
 window.selectOrUnselectBoardCard = selectOrUnselectBoardCard;
 window.getSelectedCard = getSelectedCard;

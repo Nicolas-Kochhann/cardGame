@@ -7,7 +7,7 @@ export class Card{
     attack;
     defense;
     isDead = false;
-    madeAction = 0;
+    madeActions = 0;
     actionLimit = 1;
 
     constructor(id, name, image, health, attack, defense){
