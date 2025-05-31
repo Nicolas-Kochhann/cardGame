@@ -2,23 +2,24 @@
 import { cards, numberOfCardsInGame } from "./instancedCards.js";
 import { Card } from "./card.js";
 
-const actions = []
+const actions = [];
 const cardsInGameId = [];
 const cardsInGameInstances = [];
 const cemetery = [];
 
 function selectOrUnselectBoardCard(cardID){      // And remove if card is selected(A shit name, I know).
-    
+
     const currentSelectedCardArray = document.querySelectorAll(".selectedCard");   // Stores cards with selectedCard CSS class.
 
-    // Remove duplicated selected cards
-    let card = document.getElementById(cardID);
-    if (card.classList.contains("selectedCard")){
-        card.classList.remove("selectedCard");
+    let cardElement = document.getElementById(cardID);
+
+    if (cardElement.classList.contains("selectedCard")){
+        cardElement.classList.remove("selectedCard");
     } else {
-        card.classList.add("selectedCard");
+        cardElement.classList.add("selectedCard");
     }
 
+    // Remove duplicated selected cards
     let length = currentSelectedCardArray.length;
 
     for (let i = 0; i < length; i++){
@@ -50,7 +51,7 @@ function generateCard(){
 
     let newCardId;
     while (true){
-        newCardId = Math.floor(Math.random() * 1000) + (numberOfCardsInGame + 1); // Generate id.
+        newCardId = Math.floor(Math.random() * 10000) + (numberOfCardsInGame + 1); // Generate id.
         if (!(cardsInGameId.includes(newCardId))){                               // Don´t allow duplicate id
             break;
         }
@@ -78,7 +79,8 @@ function generateCard(){
 // Add the card element inside of a parent Node.
 function generateCardHtml(parentElementNode, card){
 
-    const cardNode = parentElementNode.appendChild(document.createElement("div"));
+    const cardNode = document.createElement("div");
+    parentElementNode.appendChild(cardNode);
     cardNode.id = card.id;
 
     const cardName = cardNode.appendChild(document.createElement("div"));
@@ -126,9 +128,9 @@ function getPileCard(){
     
     const cardNode = generateCardHtml(deck, generatedCard);
 
-    cardNode.setAttribute("onclick", "putCardOnBoard(" + generatedCard.id + ")");
+    cardNode.setAttribute("onclick", `putCardOnBoard(${generatedCard.id})`);
 
-    cardNode.addEventListener("click", () => putCardOnBoard(cardNode));
+    // TODO - Resolver carta indo pro canto da tela quando seleciono.
 
 }
 
@@ -178,12 +180,14 @@ function generateEnemyCard(){
 
 
 
-function putCardOnBoard(cardElement){
+function putCardOnBoard(cardID){
+
+    let cardElement = document.getElementById(cardID);
 
     const playerBoard = document.getElementById("player-half-board");
     playerBoard.appendChild(cardElement);
 
-    cardElement.setAttribute("onclick", "selectOrUnselectBoardCard("+ cardElement.id +")");
+    cardElement.setAttribute("onclick", `selectOrUnselectBoardCard(${cardID})`);
 
 }
 
@@ -217,7 +221,7 @@ function removeCard(card){
     const cardElement = document.getElementById(card.id);
     cardElement.remove();
 
-    cemetery.unshift(card) // Add card on start of cemetery array.
+    cemetery.unshift(card); // Add card on start of cemetery array.
 
 }
 
@@ -262,5 +266,5 @@ window.getSelectedCard = getSelectedCard;
 window.attackCard = attackCard;
 window.executeActions = executeActions;
 
-export default { actions, cardsInGameId, cardsInGameInstances, getPileCard, renewHorde, putCardOnBoard, selectOrUnselectBoardCard, getSelectedCard, attackCard, executeActions };
+export default { actions, cardsInGameId, cardsInGameInstances, getPileCard, generateEnemyCard, putCardOnBoard, selectOrUnselectBoardCard, getSelectedCard, attackCard, executeActions };
 

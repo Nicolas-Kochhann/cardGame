@@ -173,6 +173,7 @@ footer {
     position: relative;
     border: 4px solid rgb(124, 70, 248);
     border-radius: 6px;
+    will-change: auto;
 }
 
 .card-name {
@@ -212,6 +213,7 @@ footer {
 .selectedCard {
     box-shadow: 0px 0px 5px 5px rgb(133, 138, 209);
     animation: selectedCard-animation ease 200ms;
+    transform: scale(1.3);
 }
 
 
@@ -221,10 +223,10 @@ footer {
 
 @keyframes selectedCard-animation {
     from {
-        transform: scale(0);
+        transform: scale(1);
     }
 
     to {
-        transform: scale(1);
+        transform: scale(1.3);
     }
 }
