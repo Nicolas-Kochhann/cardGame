@@ -1,42 +1,36 @@
-
-import { cards, numberOfCardsInGame } from "./instancedCards.js";
-import { Card } from "./card.js";
+import card, { Card, cards, numberOfCardsInGame } from "./card.js";
 
 const actions = [];
 const cardsInGameId = [];
 const cardsInGameInstances = [];
 const cemetery = [];
 
-function selectOrUnselectBoardCard(cardID){      // And remove if card is selected(A shit name, I know).
+function selectOrUnselectBoardCard(cardID) {      // And remove if card is selected(A shit name, I know).
 
     const currentSelectedCardArray = document.querySelectorAll(".selectedCard");   // Stores cards with selectedCard CSS class.
 
     let cardElement = document.getElementById(cardID);
 
-    if (cardElement.classList.contains("selectedCard")){
-        cardElement.classList.remove("selectedCard");
-    } else {
-        cardElement.classList.add("selectedCard");
-    }
+    cardElement.classList.contains("selectedCard") ? cardElement.classList.remove("selectedCard") : cardElement.classList.add("selectedCard");
 
     // Remove duplicated selected cards
     let length = currentSelectedCardArray.length;
 
-    for (let i = 0; i < length; i++){
+    for (let i = 0; i < length; i++) {
         currentSelectedCardArray[i].classList.remove("selectedCard");
     }
 
 }
 
 
-function getSelectedCard(){
+function getSelectedCard() {
     let currentSelectedCard = document.querySelector(".selectedCard"); // Get the unique element remaining with selected card class
-    
+
     let selectedCard = null;
 
-    if (currentSelectedCard != null){
+    if (currentSelectedCard != null) {
         selectedCard = cardsInGameInstances.find(card => card.id == currentSelectedCard.id);
-    } 
+    }
 
     return selectedCard;         // If dont have card selected, returns null.
 
@@ -45,14 +39,14 @@ function getSelectedCard(){
 
 
 
-function generateCard(){
+function generateCard() {
     const randomCardId = Math.floor(Math.random() * numberOfCardsInGame) + 1;
     let baseCard = cards.find(card => card.id == randomCardId);
 
     let newCardId;
-    while (true){
+    while (true) {
         newCardId = Math.floor(Math.random() * 10000) + (numberOfCardsInGame + 1); // Generate id.
-        if (!(cardsInGameId.includes(newCardId))){                               // Don´t allow duplicate id
+        if (!(cardsInGameId.includes(newCardId))) {                               // Don´t allow duplicate id
             break;
         }
     }
@@ -64,9 +58,10 @@ function generateCard(){
         baseCard.image,
         baseCard.health,
         baseCard.attack,
-        baseCard.defense
-    );        
-    
+        baseCard.defense,
+        baseCard.initiative
+    );
+
     cardsInGameId.push(generatedCard.id);
     console.log(cardsInGameId);
     cardsInGameInstances.push(generatedCard);
@@ -77,7 +72,7 @@ function generateCard(){
 
 
 // Add the card element inside of a parent Node.
-function generateCardHtml(parentElementNode, card){
+function generateCardHtml(parentElementNode, card) {
 
     const cardNode = document.createElement("div");
     parentElementNode.appendChild(cardNode);
@@ -93,7 +88,7 @@ function generateCardHtml(parentElementNode, card){
 
     cardName.classList.add("card-name");
     cardStats.classList.add("stats");
-    
+
     cardNode.classList.add("card");
     cardStats.classList.add("stats");
 
@@ -105,7 +100,7 @@ function generateCardHtml(parentElementNode, card){
 
 
 // add or update the card stats to html card element
-function addCardNodeStats(card){
+function addCardNodeStats(card) {
 
     const cardElement = document.getElementById(card.id)
 
@@ -121,66 +116,37 @@ function addCardNodeStats(card){
 
 
 
-function getPileCard(){
+function getPileCard() {
 
     let generatedCard = generateCard();
     const deck = document.getElementById("deck");
-    
+
     const cardNode = generateCardHtml(deck, generatedCard);
 
     cardNode.setAttribute("onclick", `putCardOnBoard(${generatedCard.id})`);
 
-    // TODO - Resolver carta indo pro canto da tela quando seleciono.
-
 }
 
 
 
-// Add the attack event to an element Node.
-function addAttackCardEvent(cardNode){
-
-    cardNode.addEventListener("click", () => {
-
-        const realizerCard = getSelectedCard();
-
-        if (realizerCard === null) return;  // if don´t have selected card, returns function without register the action.
-
-        const targetCard = cardsInGameInstances.find(card => card.id == cardNode.id);
-
-        // Test if the realizer card have actions remaining to do.
-        if (realizerCard.madeActions === realizerCard.actionLimit) {
-            alert("The selected card don`t have more actions in this turn.");
-            return;
-        }
-
-        actions.push({
-            type: "attack",
-            realizeAction: (dice) => attackCard(realizerCard, targetCard, dice.diceResultAttack, dice.diceResultDefense)  // Closure which will receive a dice value in the future
-        });
-
-        realizerCard.madeActions += 1;
-
-        console.log(realizerCard.madeActions);
-        console.log(actions);
-    });
-}
 
 
 
-function generateEnemyCard(){
+
+function generateEnemyCard() {
 
     let generatedCard = generateCard();
 
     const cpuBoard = document.getElementById("cpu-half-board");
-    
+
     const cardNode = generateCardHtml(cpuBoard, generatedCard);
 
-    addAttackCardEvent(cardNode);
+    cardNode.addEventListener("click", () => setActionAttack(generatedCard));
 }
 
 
 
-function putCardOnBoard(cardID){
+function putCardOnBoard(cardID) {
 
     let cardElement = document.getElementById(cardID);
 
@@ -193,13 +159,11 @@ function putCardOnBoard(cardID){
 
 
 
-function attackCard(realizerCard, targetCard, diceResultAttack, diceResultDefense){
+function attackCard(realizerCard, targetCard, diceResultAttack, diceResultDefense) {
 
-    if (realizerCard == null){
-        return;
-    }
+    if (realizerCard === null) return;
 
-    realizerCard.attack + diceResultAttack  >= targetCard.defense + diceResultDefense ? targetCard.takeDamage(realizerCard.attack) : null;
+    realizerCard.attack + diceResultAttack >= targetCard.defense + diceResultDefense ? targetCard.takeDamage(realizerCard.attack) : null;
 
     addCardNodeStats(targetCard);
 
@@ -211,10 +175,18 @@ function attackCard(realizerCard, targetCard, diceResultAttack, diceResultDefens
 }
 
 
+function cureCard(realizerCard, targetCard){
+    if (realizerCard === null || targetCard.isDead === true) return;
+
+    targetCard.regenerateHealth(realizerCard.cureRate);
+
+}
+
+
 
 // Removes card object and card element from game, taking card object to the cemetery.
-function removeCard(card){
-    
+function removeCard(card) {
+
     cardsInGameId.pop(card.id);
     cardsInGameInstances.pop(card);
 
@@ -227,7 +199,7 @@ function removeCard(card){
 
 
 
-function rollDice(){
+function rollDice() {
 
     const diceValue = Math.floor(Math.random() * 6) + 1;
     return diceValue;
@@ -236,7 +208,7 @@ function rollDice(){
 
 
 
-function executeActions(){
+function executeActions() {
 
     let diceResultAttack = rollDice();
     let diceResultDefense = rollDice();
@@ -246,10 +218,13 @@ function executeActions(){
         diceResultDefense: diceResultDefense
     };
 
+    actions.sort((a, b) => {b.initiative - a.initiative});
 
-    actions.forEach(action => {if (action.type === "attack"){
-        action.realizeAction(dice);
-    }});
+    actions.forEach(action => {
+        if (action.type === "attack") {
+            action.realizeAction(dice);
+        }
+    });
 
     actions.length = 0;
 
@@ -265,6 +240,7 @@ window.selectOrUnselectBoardCard = selectOrUnselectBoardCard;
 window.getSelectedCard = getSelectedCard;
 window.attackCard = attackCard;
 window.executeActions = executeActions;
+window.cureCard = cureCard;
 
-export default { actions, cardsInGameId, cardsInGameInstances, getPileCard, generateEnemyCard, putCardOnBoard, selectOrUnselectBoardCard, getSelectedCard, attackCard, executeActions };
+export default { actions, cardsInGameId, cardsInGameInstances, getPileCard, generateEnemyCard, putCardOnBoard, selectOrUnselectBoardCard, getSelectedCard, attackCard, executeActions, cureCard };
 
