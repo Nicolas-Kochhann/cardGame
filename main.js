@@ -1,4 +1,4 @@
-import game from "./game.js";
+import {executeActions} from "./game.js";
 
 function diceButtonEvent(){
     const diceButton = document.getElementById("diceButton");

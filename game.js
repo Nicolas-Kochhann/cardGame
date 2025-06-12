@@ -1,4 +1,5 @@
-import card, { Card, cards, numberOfCardsInGame } from "./card.js";
+import { Card, cards, numberOfCardsInGame } from "./card.js";
+import {setActionAttack, setActionCure} from "./action.js";
 
 const actions = [];
 const cardsInGameId = [];
@@ -218,7 +219,8 @@ function executeActions() {
         diceResultDefense: diceResultDefense
     };
 
-    actions.sort((a, b) => {b.initiative - a.initiative});
+    actions.sort((a, b) => b.initiative - a.initiative);
+    console.log(actions);
 
     actions.forEach(action => {
         if (action.type === "attack") {
@@ -242,5 +244,4 @@ window.attackCard = attackCard;
 window.executeActions = executeActions;
 window.cureCard = cureCard;
 
-export default { actions, cardsInGameId, cardsInGameInstances, getPileCard, generateEnemyCard, putCardOnBoard, selectOrUnselectBoardCard, getSelectedCard, attackCard, executeActions, cureCard };
-
+export { actions, cardsInGameId, cardsInGameInstances, getPileCard, generateEnemyCard, putCardOnBoard, selectOrUnselectBoardCard, getSelectedCard, attackCard, executeActions, cureCard };

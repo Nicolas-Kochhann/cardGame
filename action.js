@@ -1,4 +1,4 @@
-import {getSelectedCard, attackCard, cureCard} from "./game.js";
+import {actions, attackCard, getSelectedCard } from "./game.js";
 
 // Add a attack action to actions array.
 function setActionAttack(targetCard) {
@@ -35,17 +35,17 @@ function setActionCure(targetCard){
     // if don´t have selected card, or selected card are diferent than a Healer, returns function without register the action.
     if (realizerCard === null || realizerCard.type === !("Healer")) return;
     
-    // Test if the realizer card have actions remaining to do.
     if (realizerCard.madeActions === realizerCard.actionLimit) {
         alert("The selected card don`t have more actions in this turn.");
         return;
     }
 
     actions.push({
-        type: "heal",
+        type: "cure",
         initiative: realizerCard.initiative,
         realizeAction: () => cureCard(realizerCard, targetCard)
     })
 
 }
 
+export { setActionAttack, setActionCure };

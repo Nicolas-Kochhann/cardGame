@@ -1,4 +1,4 @@
-export class Card{
+class Card{
     
     id;
     name;
@@ -40,7 +40,7 @@ const card2 = new Card(2, "Skinny Mage", "/resources/cards/magia_negra.png", 20,
 const card3 = new Card(3, "Broke Guy", "/resources/cards/dancarino_de_breakdance_hospitalizado.png", 20, 1, 10, 1);
 const card4 = new Card(4, "SpongeBob Mafia", "/resources/cards/bob_esponja_mafioso.jpg", 20, 5, 8, 5);
 
-export const cards = [card1, card2, card3, card4];               // Array with "mother" cards on the game
-export const numberOfCardsInGame = cards.length;
+const cards = [card1, card2, card3, card4];              // Array with "mother" cards on the game
+const numberOfCardsInGame = cards.length;
 
-export default{ Card, cards, numberOfCardsInGame };
+export { Card, cards, numberOfCardsInGame };
