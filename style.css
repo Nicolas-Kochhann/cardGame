@@ -218,6 +218,26 @@ footer {
     z-index: 10;
 }
 
+.display{
+
+}
+
+actionSelectMenu{
+   position: absolute;
+   display: flex;
+   z-index: 10;
+   background-color: rgb(75, 25, 25);
+   border: 2px rgb(56, 11, 11);
+}
+
+attackButton{
+    display: flex;
+}
+
+cureButton{
+    display: flex;
+}
+
 
 /*########################################################
 ################### Card Animations ######################

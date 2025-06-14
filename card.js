@@ -1,5 +1,4 @@
-class Card{
-    
+class Card {
     id;
     name;
     image;
@@ -13,7 +12,7 @@ class Card{
     maxHealth = (this.health * 1.50);
 
 
-    constructor(id, name, image, health, attack, defense, initiative){
+    constructor(id, name, image, health, attack, defense, initiative) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -23,16 +22,53 @@ class Card{
         this.initiative = initiative;
     }
 
-    takeDamage(damage){
+    takeDamage(damage) {
         this.health -= damage;
         this.isDead = this.health <= 0; // Check if is dead.
     }
 
-    regenerateHealth(regeneratedHealth){
+    regenerateHealth(regeneratedHealth) {
         this.health += regeneratedHealth;
         if (this.health > this.maxHealth) this.health = this.maxHealth;
     }
+}
 
+
+class Healer extends Card{
+    type = "healer";
+    cureRate;
+
+    constructor(id, name, image, health, attack, defense, initiative, cureRate){
+        super(id, name, image, health, attack, defense, initiative);
+        this.cureRate = cureRate;
+    }
+}
+
+class Tanker extends Card{
+    type = "tanker";
+    maxHealth = (this.health * 2.00);
+
+    constructor(id, name, image, health, attack, defense, initiative){
+        super(id, name, image, health, attack, defense, initiative);
+    }
+}
+
+class Coiner extends Card{
+    type = "coiner";
+    coinMintRate;
+
+    constructor(id, name, image, health, attack, defense, initiative, coinMintRate){
+        super(id, name, image, health, attack, defense, initiative);
+        this.coinMintRate = coinMintRate;
+    }
+}
+
+class Mage {
+    type = "mage";
+
+    constructor(id, name, image, health, attack, defense, initiative, cureRate){
+        super(id, name, image, health, attack, defense, initiative);;
+    }
 }
 
 const card1 = new Card(1, "PHP", "/resources/cards/php.png", 20, 5, 5, 3);

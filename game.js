@@ -6,6 +6,7 @@ const cardsInGameId = [];
 const cardsInGameInstances = [];
 const cemetery = [];
 
+
 function selectOrUnselectBoardCard(cardID) {      // And remove if card is selected(A shit name, I know).
 
     const currentSelectedCardArray = document.querySelectorAll(".selectedCard");   // Stores cards with selectedCard CSS class.
@@ -21,6 +22,18 @@ function selectOrUnselectBoardCard(cardID) {      // And remove if card is selec
         currentSelectedCardArray[i].classList.remove("selectedCard");
     }
 
+}
+
+
+function generateActionMenus(selectedCard){
+    if (selectedCard.type = "healer"){
+        const attackButton = document.createElement("div");
+        const cureButton = document.createElement("div");
+        document.querySelectorAll(".actionSelectMenu").appendChild(cureButton);
+
+        attackButton.classList.add("attackButton");
+        cureButton.classList.add("cureButton");
+    }
 }
 
 
@@ -81,6 +94,7 @@ function generateCardHtml(parentElementNode, card) {
 
     const cardName = cardNode.appendChild(document.createElement("div"));
     const cardStats = cardNode.appendChild(document.createElement("div"));
+    const actionSelectMenu = cardNode.appendChild(document.createElement("div"));
     const img = cardNode.appendChild(document.createElement("img"));
 
     img.src = card.image;
@@ -89,9 +103,8 @@ function generateCardHtml(parentElementNode, card) {
 
     cardName.classList.add("card-name");
     cardStats.classList.add("stats");
-
     cardNode.classList.add("card");
-    cardStats.classList.add("stats");
+    actionSelectMenu.classList.add("actionSelectMenu")
 
     addCardNodeStats(card);
 
@@ -142,7 +155,12 @@ function generateEnemyCard() {
 
     const cardNode = generateCardHtml(cpuBoard, generatedCard);
 
-    cardNode.addEventListener("click", () => setActionAttack(generatedCard));
+    cardNode.addEventListener("click", () => displayActionMenu(generatedCard));
+}
+
+
+function displayActionMenu(card){
+
 }
 
 
@@ -220,7 +238,6 @@ function executeActions() {
     };
 
     actions.sort((a, b) => b.initiative - a.initiative);
-    console.log(actions);
 
     actions.forEach(action => {
         if (action.type === "attack") {
