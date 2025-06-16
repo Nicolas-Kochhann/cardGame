@@ -66,7 +66,7 @@ class Coiner extends Card{
 class Mage {
     type = "mage";
 
-    constructor(id, name, image, health, attack, defense, initiative, cureRate){
+    constructor(id, name, image, health, attack, defense, initiative){
         super(id, name, image, health, attack, defense, initiative);;
     }
 }

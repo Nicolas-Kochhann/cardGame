@@ -218,9 +218,24 @@ footer {
     z-index: 10;
 }
 
-.display{
+/*########################################################
+################### Card Animations ######################
+##########################################################*/
 
+@keyframes selectedCard-animation {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.20);
+    }
 }
+
+
+/*########################################################
+####################### Action menu ######################
+##########################################################*/
 
 actionSelectMenu{
    position: absolute;
@@ -238,17 +253,10 @@ cureButton{
     display: flex;
 }
 
+castMagicButton{
+    display: flex;
+}
 
-/*########################################################
-################### Card Animations ######################
-##########################################################*/
+.display{
 
-@keyframes selectedCard-animation {
-    from {
-        transform: scale(1);
-    }
-
-    to {
-        transform: scale(1.20);
-    }
 }

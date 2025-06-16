@@ -26,14 +26,26 @@ function selectOrUnselectBoardCard(cardID) {      // And remove if card is selec
 
 
 function generateActionMenus(selectedCard){
-    if (selectedCard.type = "healer"){
+    const actionSelectMenu = document.querySelectorAll(".actionSelectMenu");
+    actionSelectMenu.forEach(menu => {
         const attackButton = document.createElement("div");
-        const cureButton = document.createElement("div");
-        document.querySelectorAll(".actionSelectMenu").appendChild(cureButton);
+        attackButton.classList.add("attackButton")
+        menu.appendChild(attackButton);
+    });
 
-        attackButton.classList.add("attackButton");
-        cureButton.classList.add("cureButton");
-    }
+    if (selectedCard.type === "healer"){
+        actionSelectMenu.forEach(menu => {
+            const cureButton = document.createElement("div");
+            cureButton.classList.add("cureButton");
+            menu.appendChild(cureButton);
+    })}
+
+    else if (selectedCard.type === "mage"){
+        actionSelectMenu.forEach(menu => {
+            const castMagicButton = document.createElement("div");
+            cureButton.classList.add("cureButton");
+            menu.appendChild(castMagicButton);
+    })}
 }
 
 
