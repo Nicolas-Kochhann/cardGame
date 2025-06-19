@@ -247,16 +247,24 @@ actionSelectMenu{
 
 attackButton{
     display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/resources/icons/attack-icon.png");
 }
 
 cureButton{
     display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/resources/icons/cure-icon.png");
 }
 
 castMagicButton{
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .display{
-
+    display: flex !important;
 }

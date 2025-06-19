@@ -63,7 +63,7 @@ class Coiner extends Card{
     }
 }
 
-class Mage {
+class Mage extends Card{
     type = "mage";
 
     constructor(id, name, image, health, attack, defense, initiative){

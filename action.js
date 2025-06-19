@@ -46,6 +46,7 @@ function setActionCure(targetCard){
         realizeAction: () => cureCard(realizerCard, targetCard)
     })
 
+    realizerCard.madeActions += 1;
 }
 
 export { setActionAttack, setActionCure };

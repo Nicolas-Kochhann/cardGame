@@ -8,50 +8,63 @@ const cemetery = [];
 
 
 function selectOrUnselectBoardCard(cardID) {      // And remove if card is selected(A shit name, I know).
-
     const currentSelectedCardArray = document.querySelectorAll(".selectedCard");   // Stores cards with selectedCard CSS class.
-
     let cardElement = document.getElementById(cardID);
 
     cardElement.classList.contains("selectedCard") ? cardElement.classList.remove("selectedCard") : cardElement.classList.add("selectedCard");
-
+   
     // Remove duplicated selected cards
     let length = currentSelectedCardArray.length;
-
     for (let i = 0; i < length; i++) {
         currentSelectedCardArray[i].classList.remove("selectedCard");
     }
-
+    
+    generateActionMenus(getSelectedCard());  // Prepare menus based in the selected card.
 }
+
 
 
 function generateActionMenus(selectedCard){
     const actionSelectMenu = document.querySelectorAll(".actionSelectMenu");
     actionSelectMenu.forEach(menu => {
         const attackButton = document.createElement("div");
-        attackButton.classList.add("attackButton")
-        menu.appendChild(attackButton);
+        attackButton.classList.add("attackButton");
+        menu.appendChild(attackButton).onclick = setActionAttack();
     });
 
     if (selectedCard.type === "healer"){
         actionSelectMenu.forEach(menu => {
             const cureButton = document.createElement("div");
             cureButton.classList.add("cureButton");
-            menu.appendChild(cureButton);
+            menu.appendChild(cureButton).onclick = setActionCure();
     })}
 
     else if (selectedCard.type === "mage"){
         actionSelectMenu.forEach(menu => {
             const castMagicButton = document.createElement("div");
-            cureButton.classList.add("cureButton");
+            cureButton.classList.add("castMagicButton");
             menu.appendChild(castMagicButton);
     })}
 }
 
 
+function displayActionMenu(card){
+     const menu = document.getElementById(card.id).querySelector(".actionSelectMenu");
+     const menuOpenList = document.querySelectorAll(".actionSelectMenu");
+
+     menuOpenList.forEach(element => {
+        if (element != menu){
+            element.classList.remove("display");
+        }
+     });
+
+     menu.classList.add("display");
+}
+
+
+
 function getSelectedCard() {
     let currentSelectedCard = document.querySelector(".selectedCard"); // Get the unique element remaining with selected card class
-
     let selectedCard = null;
 
     if (currentSelectedCard != null) {
@@ -59,7 +72,6 @@ function getSelectedCard() {
     }
 
     return selectedCard;         // If dont have card selected, returns null.
-
 }
 
 
@@ -110,7 +122,6 @@ function generateCardHtml(parentElementNode, card) {
     const img = cardNode.appendChild(document.createElement("img"));
 
     img.src = card.image;
-
     cardName.textContent = card.name;
 
     cardName.classList.add("card-name");
@@ -119,7 +130,6 @@ function generateCardHtml(parentElementNode, card) {
     actionSelectMenu.classList.add("actionSelectMenu")
 
     addCardNodeStats(card);
-
     return cardNode;
 }
 
@@ -152,12 +162,7 @@ function getPileCard() {
     cardNode.setAttribute("onclick", `putCardOnBoard(${generatedCard.id})`);
 
 }
-
-
-
-
-
-
+ 
 
 function generateEnemyCard() {
 
@@ -168,11 +173,6 @@ function generateEnemyCard() {
     const cardNode = generateCardHtml(cpuBoard, generatedCard);
 
     cardNode.addEventListener("click", () => displayActionMenu(generatedCard));
-}
-
-
-function displayActionMenu(card){
-
 }
 
 
