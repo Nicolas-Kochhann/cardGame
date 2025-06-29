@@ -174,6 +174,7 @@ footer {
     border: 4px solid rgb(124, 70, 248);
     border-radius: 6px;
     will-change: auto;
+    z-index: 1;
 }
 
 .card-name {
@@ -232,39 +233,70 @@ footer {
     }
 }
 
-
 /*########################################################
 ####################### Action menu ######################
 ##########################################################*/
 
-actionSelectMenu{
-   position: absolute;
-   display: flex;
-   z-index: 10;
-   background-color: rgb(75, 25, 25);
-   border: 2px rgb(56, 11, 11);
+.actionSelectMenu {
+    display: flex;
+    width: 28%;
+    position: absolute;
+    left: 0%;
+    border: 5px rgb(56, 11, 11);
+    background-color: brown;
+    z-index: 2;
 }
 
-attackButton{
+.attackButton {
     display: flex;
+    height: 40px;
+    width: 100%;
     justify-content: center;
     align-items: center;
-    background-image: url("/resources/icons/attack-icon.png");
+    border: 3px solid black;
 }
 
-cureButton{
+.attackButton > img{
+    height: 85%;
+    width: 85%;
+}
+
+.cureButton {
     display: flex;
     justify-content: center;
     align-items: center;
     background-image: url("/resources/icons/cure-icon.png");
+    background-size: auto;
 }
 
-castMagicButton{
+.castMagicButton {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.display{
+.cancelButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.display {
     display: flex !important;
+    transform: translateX(360%);
+    animation: card-menu-animation ease 600ms;
+}
+
+/*########################################################
+################ Action menu Animations ##################
+##########################################################*/
+
+@keyframes card-menu-animation {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(360%);
+    }
 }
