@@ -239,6 +239,7 @@ footer {
 
 .actionSelectMenu {
     display: flex;
+    flex-direction: column;
     width: 28%;
     position: absolute;
     left: 0%;
@@ -247,7 +248,10 @@ footer {
     z-index: 2;
 }
 
-.attackButton {
+.attackButton,
+.cureButton,
+.castMagicButton,
+.cancelButton {
     display: flex;
     height: 40px;
     width: 100%;
@@ -256,29 +260,12 @@ footer {
     border: 3px solid black;
 }
 
-.attackButton > img{
+.attackButton > img,
+.cureButton > img,
+.castMagicButton > img,
+.cancelButton > img {
     height: 85%;
     width: 85%;
-}
-
-.cureButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url("/resources/icons/cure-icon.png");
-    background-size: auto;
-}
-
-.castMagicButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.cancelButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .display {

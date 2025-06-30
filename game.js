@@ -1,6 +1,6 @@
-import {Card, cards, numberOfCardsInGame} from "./card.js";
-import {setActionAttack, setActionCure} from "./action.js";
-import {CARDS} from "./elements.js";
+import { Card, cards, numberOfCardsInGame } from "./card.js";
+import { setActionAttack, setActionCure } from "./action.js";
+import { CARDS } from "./elements.js";
 
 const actions = [];
 const cardsInGameId = [];
@@ -13,7 +13,7 @@ function selectOrUnselectBoardCard(cardID) {      // And remove if card is selec
     let cardElement = document.getElementById(cardID);
 
     cardElement.classList.contains("selectedCard") ? cardElement.classList.remove("selectedCard") : cardElement.classList.add("selectedCard");
-   
+
     // Remove duplicated selected cards
     let length = currentSelectedCardArray.length;
     for (let i = 0; i < length; i++) {
@@ -22,9 +22,9 @@ function selectOrUnselectBoardCard(cardID) {      // And remove if card is selec
 
     generateActionMenus(getSelectedCard());
 }
-  
-    
-function generateActionMenus(selectedCard){
+
+
+function generateActionMenus(selectedCard) {
     if (selectedCard === null) return;
 
     const actionSelectMenu = document.querySelectorAll(".actionSelectMenu");
@@ -32,44 +32,55 @@ function generateActionMenus(selectedCard){
         menu.innerHTML = "";
 
         const attackButton = document.createElement("div");
-        const img = document.createElement("img");
-        img.src = "resources/icons/attack-icon.png";
-        attackButton.appendChild(img);
+        const attackIcon = document.createElement("img");
+        attackIcon.src = "resources/icons/attack-icon.png";
+        attackButton.appendChild(attackIcon);
         attackButton.classList.add("attackButton");
-        menu.appendChild(attackButton).onclick = () => {setActionAttack()};
+        menu.appendChild(attackButton).onclick = () => { setActionAttack() };
 
         const cancelButton = document.createElement("div");
+        const cancelIcon = document.createElement("img");
+        cancelIcon.src = "resources/icons/cancel-icon.png";
+        cancelButton.appendChild(cancelIcon);
         cancelButton.classList.add("cancelButton");
-        menu.appendChild(cancelButton).onclick = () => {cancelActions()};
+        menu.appendChild(cancelButton).onclick = () => { cancelActions() };
 
-        if (selectedCard.type === "healer"){
+        if (selectedCard.type === "healer") {
             actionSelectMenu.forEach(menu => {
                 const cureButton = document.createElement("div");
+                const cureIcon = document.createElement("img");
+                cureIcon.src = "resources/icons/cure-icon.png";
+                cureButton.appendChild(cureIcon);
                 cureButton.classList.add("cureButton");
-                menu.appendChild(cureButton).onclick = () => {setActionCure()};
-        })}
+                menu.appendChild(cureButton).onclick = () => { setActionCure() };
+            })
+        }
 
-        else if (selectedCard.type === "mage"){
+        else if (selectedCard.type === "mage") {
             actionSelectMenu.forEach(menu => {
                 const castMagicButton = document.createElement("div");
+                const castMagicIcon = document.createElement("img");
+                castMagicIcon.src = "resources/icons/cast-magic-icon.png";
+                cureButton.appendChild(castMagicIcon);
                 castMagicButton.classList.add("castMagicButton");
                 menu.appendChild(castMagicButton);
-        })}
+            })
+        }
     });
 }
 
 
-function displayActionMenu(card){
-     const menu = document.getElementById(card.id).querySelector(".actionSelectMenu");
-     const menuOpenList = document.querySelectorAll(".actionSelectMenu");
+function displayActionMenu(card) {
+    const menu = document.getElementById(card.id).querySelector(".actionSelectMenu");
+    const menuOpenList = document.querySelectorAll(".actionSelectMenu");
 
-     menuOpenList.forEach(element => {
-        if (element != menu){
+    menuOpenList.forEach(element => {
+        if (element != menu) {
             element.classList.remove("display");
         }
-     });
+    });
 
-     menu.classList.add("display");
+    menu.classList.add("display");
 }
 
 
@@ -156,7 +167,7 @@ function addCardNodeStats(card) {
 
     // Get the stats div, and add the html, updating it .
     childrenElements[1].innerHTML =
-    `<span><i>ATK </i>${card.attack}</span>
+        `<span><i>ATK </i>${card.attack}</span>
     <span><i>DEF </i>${card.defense}</span>
     <span><i>HP </i>${card.health}</span>`
 }
@@ -174,7 +185,7 @@ function getPileCard() {
     cardNode.setAttribute("onclick", `putCardOnBoard(${generatedCard.id})`);
 
 }
- 
+
 
 function generateEnemyCard() {
     let generatedCard = generateCard();
@@ -212,7 +223,7 @@ function attackCard(realizerCard, targetCard, diceResultAttack, diceResultDefens
 }
 
 
-function cureCard(realizerCard, targetCard){
+function cureCard(realizerCard, targetCard) {
     if (realizerCard === null || targetCard.isDead === true) return;
 
     targetCard.regenerateHealth(realizerCard.cureRate);
