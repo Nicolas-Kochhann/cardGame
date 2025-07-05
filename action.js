@@ -17,6 +17,7 @@ function setActionAttack(targetCard) {
     actions.push({
         type: "attack",
         initiative: realizerCard.initiative,
+        cardsInvolved: [realizerCard, targetCard],
         realizeAction: (dice) => attackCard(realizerCard, targetCard, dice.diceResultAttack, dice.diceResultDefense)  // Closure which will receive a dice value in the future
     });
 
@@ -47,6 +48,14 @@ function setActionCure(targetCard){
     })
 
     realizerCard.madeActions += 1;
+}
+
+function cancelActions(targetCard){
+    actions.forEach(action => {
+        if (action.cardsInvolved[0] === getSelectedCard() && action.cardsInvolved[1] === targetCard){
+            // actions.pop(action);
+        }
+    })
 }
 
 export { setActionAttack, setActionCure };

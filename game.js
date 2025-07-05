@@ -23,6 +23,11 @@ function selectOrUnselectBoardCard(cardID) {      // And remove if card is selec
     generateActionMenus(getSelectedCard());
 }
 
+function getCardByAnElement(cardElement){
+    let card = cardsInGameInstances.find(card => card.id = cardElement.id);
+    return card;
+}
+
 
 function generateActionMenus(selectedCard) {
     if (selectedCard === null) return;
@@ -30,41 +35,38 @@ function generateActionMenus(selectedCard) {
     const actionSelectMenu = document.querySelectorAll(".actionSelectMenu");
     actionSelectMenu.forEach(menu => {
         menu.innerHTML = "";
+        //let card = getCardByAnElement(menu.parentNode);
 
         const attackButton = document.createElement("div");
         const attackIcon = document.createElement("img");
         attackIcon.src = "resources/icons/attack-icon.png";
         attackButton.appendChild(attackIcon);
         attackButton.classList.add("attackButton");
-        menu.appendChild(attackButton).onclick = () => { setActionAttack() };
+        menu.appendChild(attackButton).onclick = () => { setActionAttack(getCardByAnElement(menu.parentNode)) };
 
         const cancelButton = document.createElement("div");
         const cancelIcon = document.createElement("img");
         cancelIcon.src = "resources/icons/cancel-icon.png";
         cancelButton.appendChild(cancelIcon);
         cancelButton.classList.add("cancelButton");
-        menu.appendChild(cancelButton).onclick = () => { cancelActions() };
+        menu.appendChild(cancelButton).onclick = () => { cancelActions(getCardByAnElement(menu.parentNode)) };
 
         if (selectedCard.type === "healer") {
-            actionSelectMenu.forEach(menu => {
                 const cureButton = document.createElement("div");
                 const cureIcon = document.createElement("img");
                 cureIcon.src = "resources/icons/cure-icon.png";
                 cureButton.appendChild(cureIcon);
                 cureButton.classList.add("cureButton");
-                menu.appendChild(cureButton).onclick = () => { setActionCure() };
-            })
+                menu.appendChild(cureButton).onclick = () => { setActionCure(getCardByAnElement(menu.parentNode)) };
         }
 
         else if (selectedCard.type === "mage") {
-            actionSelectMenu.forEach(menu => {
                 const castMagicButton = document.createElement("div");
                 const castMagicIcon = document.createElement("img");
                 castMagicIcon.src = "resources/icons/cast-magic-icon.png";
                 cureButton.appendChild(castMagicIcon);
                 castMagicButton.classList.add("castMagicButton");
                 menu.appendChild(castMagicButton);
-            })
         }
     });
 }
@@ -73,14 +75,20 @@ function generateActionMenus(selectedCard) {
 function displayActionMenu(card) {
     const menu = document.getElementById(card.id).querySelector(".actionSelectMenu");
     const menuOpenList = document.querySelectorAll(".actionSelectMenu");
-
+    const cardElement = document.getElementById(card.id);
+    
     menuOpenList.forEach(element => {
         if (element != menu) {
             element.classList.remove("display");
         }
     });
-
     menu.classList.add("display");
+
+    cardElement.removeEventListener("click", () => displayActionMenu(card));
+    cardElement.addEventListener("click", () => {
+        menu.classList.remove("display");
+        cardElement.addEventListener("click", () => displayActionMenu(card));
+    })
 }
 
 
