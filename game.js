@@ -84,10 +84,11 @@ function displayActionMenu(card) {
     });
     menu.classList.add("display");
 
-    cardElement.removeEventListener("click", () => displayActionMenu(card));
-    cardElement.addEventListener("click", () => {
-        menu.classList.remove("display");
-        cardElement.addEventListener("click", () => displayActionMenu(card));
+    setTimeout(() => {
+        cardElement.addEventListener("click", () => {
+            menu.classList.remove("display");
+            cardElement.addEventListener("click", () => displayActionMenu(card));
+        }), 1000
     })
 }
 
